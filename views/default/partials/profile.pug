@@ -1,0 +1,25 @@
+div
+  h1#title= actorCV.profile.name
+  p= actorCV.website()
+  small
+    cite(title='Stockholm, Sweden')
+      | Stockholm, Sweden 
+      i.fa.fa-map-marker(aria-hidden='true')
+  p
+    |+46707010094&nbsp;
+    i.fa.fa-phone(aria-hidden='true')
+    br
+    | 
+    = actorCV.email
+    | &nbsp;
+    i.fa.fa-envelope(aria-hidden='true')
+    br
+    | February 14, 1984&nbsp;
+    i.fa.fa-gift(aria-hidden='true')
+    br
+    if user
+      a(href='/logout')
+        span.label Log out
+        | &nbsp;
+        i.fa.fa-sign-out(aria-hidden='true')
+  

@@ -1,0 +1,76 @@
+extends layout
+
+block content
+  .row
+    .col-sm-8.col-sm-offset-2.text
+      .description
+        p
+          strong Create and share Actor CVs easily
+          br
+          | Add some text on here. Adding more text probably makes it look nicer. How about another line of text?
+  .row
+    .col-sm-5
+      .form-box
+        .form-top
+          .form-top-left
+            h3 Login to edit your CV
+            p Enter email and password to log on:
+          .form-top-right
+            i.fa.fa-lock
+        .form-bottom
+          form.login-form(role='form', action='/login', method='post')
+            input(type='hidden', name='_csrf', value=_csrf)
+            .form-group
+              label.sr-only(for='username') Email
+              input.email.form-control#username(type='text', name='username', placeholder='Email...', value='tadious@gmail.com')
+            .form-group
+              label.sr-only(for='password') Password
+              input.password.form-control#password(type='password', name='password', placeholder='Password...', value='Gokomere_uct10')
+            button.btn(type='submit') Sign in!
+            a(href='/forgot') Forgot password?
+      .social-login
+        h3 ...or login with:
+        .social-login-buttons
+          a.btn.btn-link-1.btn-link-1-facebook(href='#')
+            i.fa.fa-facebook
+            | Facebook
+          a.btn.btn-link-1.btn-link-1-instagram(href='#')
+            i.fa.fa-instagram
+            | Instagram
+          a.btn.btn-link-1.btn-link-1-twitter(href='#')
+            i.fa.fa-twitter
+            | Tweeter
+          //a.btn.btn-link-1.btn-link-1-google-plus(href='#')
+            i.fa.fa-google-plus
+            | Google Plus
+    .col-sm-1.middle-border
+    .col-sm-1
+    .col-sm-5
+      .form-box
+        .form-top
+          .form-top-left
+            h3 Create your CV
+            p Reserve your URL with your name:
+          .form-top-right
+            i.fa.fa-pencil
+        .form-bottom
+          form.registration-form(role='form', action='/signup', method='post')
+            input(type='hidden', name='_csrf', value=_csrf)
+            input(type='hidden', name='_useslug',id='_useslug', value=0)
+            .form-group
+              label.sr-only(for='email') Email
+              input.email.form-control#email(type='text', name='email', placeholder='Email...')
+            .form-group
+              label.sr-only(for='firstname') First name
+              input.firstname.form-control#firstname(type='text', name='firstname', placeholder='First name...')
+            .form-group
+              label.sr-only(for='lastname') Last name
+              input.lastname.form-control#lastname(type='text', name='lastname', placeholder='Last name...')
+            .form-group
+              label.sr-only(for='slug') Your URL
+              .input-group
+                span.input-group-addon#form-url www.actorcv.me/
+                input.form-slug.form-control#slug(type='text', name='slug', placeholder='first-last-name', aria-describedby='form-url')
+                span.input-group-addon#check-url
+                  i.fa.fa-close.fa-2x(style='color:red;')
+            button.btn(type='submit') Sign me up!

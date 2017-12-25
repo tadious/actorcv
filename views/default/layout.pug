@@ -1,0 +1,77 @@
+doctype html
+html
+  head
+    meta(name='csrf-token', content=_csrf)
+    title ActorCV - #{title}
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width,initial-scale=1')
+    //[if lte IE 8]><script src="/default/js/ie/html5shiv.js"></script><![endif]
+    link(rel='stylesheet', href='/lib/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/default/css/main.css')
+    link(rel='stylesheet', href='/default/css/gallery.css')
+    //[if lte IE 8]><link rel="stylesheet" href="/default/css/ie8.css" /><![endif]
+    //[if lte IE 9]><link rel="stylesheet" href="/default/css/ie9.css" /><![endif]
+  body
+    #header
+      .top
+        #logo
+          //span.image.avatar48
+            img(src=user.gravatar(50))
+          include partials/profile
+        nav#nav
+          ul
+            li
+              a#pictures-link.skel-layers-ignoreHref(href='#pictures')
+                span.icon.fa-camera-retro Pictures
+            li
+              a#videos-link.skel-layers-ignoreHref(href='#videos')
+                span.icon.fa-youtube Videos
+            li
+              a#resume-link.skel-layers-ignoreHref(href='#resume')
+                span.icon.fa-film Resume
+            li
+              a#contact-link.skel-layers-ignoreHref(href='#contact')
+                span.icon.fa-phone Contact
+      .bottom
+        ul.icons
+          li
+            a.icon.fa-twitter(href='#')
+              span.label Twitter
+          li
+            a.icon.fa-facebook(href='#')
+              span.label Facebook
+          li
+            a.icon.fa-github(href='#')
+              span.label Github
+          li
+            a.icon.fa-dribbble(href='#')
+              span.label Dribbble
+          li
+            a.icon.fa-envelope(href='#')
+              span.label Email
+    #main
+      section#pictures.two
+        .container
+          include partials/gallery 
+      section#videos.two
+        .container
+          include partials/video
+      section#resume.three
+        .container
+          include partials/resume
+      section#contact.four
+        .container
+          include partials/contact
+    #footer
+      ul.copyright
+        li actorcv.me ©2018
+    // Scripts 
+    script(src='/default/js/jquery.min.js')
+    script(src='/default/js/jquery.scrolly.min.js')
+    script(src='/default/js/jquery.scrollzer.min.js')
+    script(src='/lib/bootstrap/js/bootstrap.min.js')
+    script(src='/default/js/skel.min.js')
+    script(src='/default/js/util.js')
+    script(src='/lib/shuffle/shuffle.js')
+    //[if lte IE 8]><script src="/default/js/ie/respond.min.js"></script><![endif]
+    script(src='/default/js/main.js')

@@ -1,19 +1,19 @@
 const bluebird = require('bluebird');
 const request = bluebird.promisifyAll(require('request'), { multiArgs: true });
 const cheerio = require('cheerio');
-const graph = require('fbgraph');
-const LastFmNode = require('lastfm').LastFmNode;
-const tumblr = require('tumblr.js');
-const GitHub = require('github');
-const Twit = require('twit');
-const stripe = require('stripe')(process.env.STRIPE_SKEY);
-const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
-const Linkedin = require('node-linkedin')(process.env.LINKEDIN_ID, process.env.LINKEDIN_SECRET, process.env.LINKEDIN_CALLBACK_URL);
-const clockwork = require('clockwork')({ key: process.env.CLOCKWORK_KEY });
-const paypal = require('paypal-rest-sdk');
-const lob = require('lob')(process.env.LOB_KEY);
-const ig = bluebird.promisifyAll(require('instagram-node').instagram());
-const foursquare = require('node-foursquare')({
+//const graph = require('fbgraph');
+//const LastFmNode = require('lastfm').LastFmNode;
+//const tumblr = require('tumblr.js');
+//const GitHub = require('github');
+//const Twit = require('twit');
+//const stripe = require('stripe')(process.env.STRIPE_SKEY);
+//const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+//const Linkedin = require('node-linkedin')(process.env.LINKEDIN_ID, process.env.LINKEDIN_SECRET, process.env.LINKEDIN_CALLBACK_URL);
+//const clockwork = require('clockwork')({ key: process.env.CLOCKWORK_KEY });
+//const paypal = require('paypal-rest-sdk');
+//const lob = require('lob')(process.env.LOB_KEY);
+//const ig = bluebird.promisifyAll(require('instagram-node').instagram());
+/*const foursquare = require('node-foursquare')({
   secrets: {
     clientId: process.env.FOURSQUARE_ID,
     clientSecret: process.env.FOURSQUARE_SECRET,
@@ -23,6 +23,7 @@ const foursquare = require('node-foursquare')({
 
 foursquare.Venues = bluebird.promisifyAll(foursquare.Venues);
 foursquare.Users = bluebird.promisifyAll(foursquare.Users);
+*/
 
 /**
  * GET /api
@@ -39,7 +40,7 @@ exports.getApi = (req, res) => {
  * Foursquare API example.
  */
 exports.getFoursquare = (req, res, next) => {
-  const token = req.user.tokens.find(token => token.kind === 'foursquare');
+  /*const token = req.user.tokens.find(token => token.kind === 'foursquare');
   Promise.all([
     foursquare.Venues.getTrendingAsync('40.7222756', '-74.0022724', { limit: 50 }, token.accessToken),
     foursquare.Venues.getVenueAsync('49da74aef964a5208b5e1fe3', token.accessToken),
@@ -53,7 +54,7 @@ exports.getFoursquare = (req, res, next) => {
       userCheckins
     });
   })
-  .catch(next);
+  .catch(next);*/
 };
 
 /**
@@ -61,7 +62,7 @@ exports.getFoursquare = (req, res, next) => {
  * Tumblr API example.
  */
 exports.getTumblr = (req, res, next) => {
-  const token = req.user.tokens.find(token => token.kind === 'tumblr');
+  /*const token = req.user.tokens.find(token => token.kind === 'tumblr');
   const client = tumblr.createClient({
     consumer_key: process.env.TUMBLR_KEY,
     consumer_secret: process.env.TUMBLR_SECRET,
@@ -75,7 +76,7 @@ exports.getTumblr = (req, res, next) => {
       blog: data.blog,
       photoset: data.posts[0].photos
     });
-  });
+  });*/
 };
 
 /**
@@ -83,7 +84,7 @@ exports.getTumblr = (req, res, next) => {
  * Facebook API example.
  */
 exports.getFacebook = (req, res, next) => {
-  const token = req.user.tokens.find(token => token.kind === 'facebook');
+  /*const token = req.user.tokens.find(token => token.kind === 'facebook');
   graph.setAccessToken(token.accessToken);
   graph.get(`${req.user.facebook}?fields=id,name,email,first_name,last_name,gender,link,locale,timezone`, (err, results) => {
     if (err) { return next(err); }
@@ -91,7 +92,7 @@ exports.getFacebook = (req, res, next) => {
       title: 'Facebook API',
       profile: results
     });
-  });
+  });*/
 };
 
 /**
@@ -99,7 +100,7 @@ exports.getFacebook = (req, res, next) => {
  * Web scraping example using Cheerio library.
  */
 exports.getScraping = (req, res, next) => {
-  request.get('https://news.ycombinator.com/', (err, request, body) => {
+  /*request.get('https://news.ycombinator.com/', (err, request, body) => {
     if (err) { return next(err); }
     const $ = cheerio.load(body);
     const links = [];
@@ -110,7 +111,7 @@ exports.getScraping = (req, res, next) => {
       title: 'Web Scraping',
       links
     });
-  });
+  });*/
 };
 
 /**
@@ -118,14 +119,14 @@ exports.getScraping = (req, res, next) => {
  * GitHub API Example.
  */
 exports.getGithub = (req, res, next) => {
-  const github = new GitHub();
+  /*const github = new GitHub();
   github.repos.get({ owner: 'sahat', repo: 'hackathon-starter' }, (err, repo) => {
     if (err) { return next(err); }
     res.render('api/github', {
       title: 'GitHub API',
       repo
     });
-  });
+  });*/
 };
 
 /**
@@ -143,7 +144,7 @@ exports.getAviary = (req, res) => {
  * New York Times API example.
  */
 exports.getNewYorkTimes = (req, res, next) => {
-  const query = {
+  /*const query = {
     'list-name': 'young-adult',
     'api-key': process.env.NYT_KEY
   };
@@ -157,7 +158,7 @@ exports.getNewYorkTimes = (req, res, next) => {
       title: 'New York Times API',
       books
     });
-  });
+  });*/
 };
 
 /**
@@ -165,7 +166,7 @@ exports.getNewYorkTimes = (req, res, next) => {
  * Last.fm API example.
  */
 exports.getLastfm = (req, res, next) => {
-  const lastfm = new LastFmNode({
+  /*const lastfm = new LastFmNode({
     api_key: process.env.LASTFM_KEY,
     secret: process.env.LASTFM_SECRET
   });
@@ -224,7 +225,7 @@ exports.getLastfm = (req, res, next) => {
       artist
     });
   })
-  .catch(next);
+  .catch(next);*/
 };
 
 /**
@@ -232,7 +233,7 @@ exports.getLastfm = (req, res, next) => {
  * Twitter API example.
  */
 exports.getTwitter = (req, res, next) => {
-  const token = req.user.tokens.find(token => token.kind === 'twitter');
+  /*const token = req.user.tokens.find(token => token.kind === 'twitter');
   const T = new Twit({
     consumer_key: process.env.TWITTER_KEY,
     consumer_secret: process.env.TWITTER_SECRET,
@@ -245,7 +246,7 @@ exports.getTwitter = (req, res, next) => {
       title: 'Twitter API',
       tweets: reply.statuses
     });
-  });
+  });*/
 };
 
 /**
@@ -253,7 +254,7 @@ exports.getTwitter = (req, res, next) => {
  * Post a tweet.
  */
 exports.postTwitter = (req, res, next) => {
-  req.assert('tweet', 'Tweet cannot be empty').notEmpty();
+  /*req.assert('tweet', 'Tweet cannot be empty').notEmpty();
 
   const errors = req.validationErrors();
 
@@ -273,7 +274,7 @@ exports.postTwitter = (req, res, next) => {
     if (err) { return next(err); }
     req.flash('success', { msg: 'Your tweet has been posted.' });
     res.redirect('/api/twitter');
-  });
+  });*/
 };
 
 /**
@@ -281,7 +282,7 @@ exports.postTwitter = (req, res, next) => {
  * Steam API example.
  */
 exports.getSteam = (req, res, next) => {
-  const steamId = '76561197982488301';
+  /*const steamId = '76561197982488301';
   const params = { l: 'english', steamid: steamId, key: process.env.STEAM_KEY };
   const playerAchievements = () => {
     params.appid = '49520';
@@ -327,7 +328,7 @@ exports.getSteam = (req, res, next) => {
       playerSummary: playerSummaries.response.players[0]
     });
   })
-  .catch(next);
+  .catch(next);*/
 };
 
 /**
@@ -335,10 +336,10 @@ exports.getSteam = (req, res, next) => {
  * Stripe API example.
  */
 exports.getStripe = (req, res) => {
-  res.render('api/stripe', {
+  /*res.render('api/stripe', {
     title: 'Stripe API',
     publishableKey: process.env.STRIPE_PKEY
-  });
+  });*/
 };
 
 /**
@@ -346,7 +347,7 @@ exports.getStripe = (req, res) => {
  * Make a payment.
  */
 exports.postStripe = (req, res) => {
-  const stripeToken = req.body.stripeToken;
+  /*const stripeToken = req.body.stripeToken;
   const stripeEmail = req.body.stripeEmail;
   stripe.charges.create({
     amount: 395,
@@ -360,7 +361,7 @@ exports.postStripe = (req, res) => {
     }
     req.flash('success', { msg: 'Your card has been successfully charged.' });
     res.redirect('/api/stripe');
-  });
+  });*/
 };
 
 /**
@@ -393,11 +394,11 @@ exports.postTwilio = (req, res, next) => {
     from: '+13472235148',
     body: req.body.message
   };
-  twilio.sendMessage(message, (err, responseData) => {
+  /*twilio.sendMessage(message, (err, responseData) => {
     if (err) { return next(err.message); }
     req.flash('success', { msg: `Text sent to ${responseData.to}.` });
     res.redirect('/api/twilio');
-  });
+  });*/
 };
 
 /**
@@ -420,11 +421,11 @@ exports.postClockwork = (req, res, next) => {
     From: 'Hackathon',
     Content: 'Hello from the Hackathon Starter'
   };
-  clockwork.sendSms(message, (err, responseData) => {
+  /*clockwork.sendSms(message, (err, responseData) => {
     if (err) { return next(err.errDesc); }
     req.flash('success', { msg: `Text sent to ${responseData.responses[0].to}` });
     res.redirect('/api/clockwork');
-  });
+  });*/
 };
 
 /**
@@ -432,7 +433,7 @@ exports.postClockwork = (req, res, next) => {
  * LinkedIn API example.
  */
 exports.getLinkedin = (req, res, next) => {
-  const token = req.user.tokens.find(token => token.kind === 'linkedin');
+  /*const token = req.user.tokens.find(token => token.kind === 'linkedin');
   const linkedin = Linkedin.init(token.accessToken);
   linkedin.people.me((err, $in) => {
     if (err) { return next(err); }
@@ -440,7 +441,7 @@ exports.getLinkedin = (req, res, next) => {
       title: 'LinkedIn API',
       profile: $in
     });
-  });
+  });*/
 };
 
 /**
@@ -448,7 +449,7 @@ exports.getLinkedin = (req, res, next) => {
  * Instagram API example.
  */
 exports.getInstagram = (req, res, next) => {
-  const token = req.user.tokens.find(token => token.kind === 'instagram');
+  /*const token = req.user.tokens.find(token => token.kind === 'instagram');
   ig.use({ client_id: process.env.INSTAGRAM_ID, client_secret: process.env.INSTAGRAM_SECRET });
   ig.use({ access_token: token.accessToken });
   Promise.all([
@@ -466,7 +467,7 @@ exports.getInstagram = (req, res, next) => {
       myRecentMedia
     });
   })
-  .catch(next);
+  .catch(next);*/
 };
 
 /**
@@ -474,7 +475,7 @@ exports.getInstagram = (req, res, next) => {
  * PayPal SDK example.
  */
 exports.getPayPal = (req, res, next) => {
-  paypal.configure({
+  /*paypal.configure({
     mode: 'sandbox',
     client_id: process.env.PAYPAL_ID,
     client_secret: process.env.PAYPAL_SECRET
@@ -509,7 +510,7 @@ exports.getPayPal = (req, res, next) => {
         });
       }
     }
-  });
+  });*/
 };
 
 /**
@@ -517,14 +518,14 @@ exports.getPayPal = (req, res, next) => {
  * PayPal SDK example.
  */
 exports.getPayPalSuccess = (req, res) => {
-  const paymentId = req.session.paymentId;
+  /*const paymentId = req.session.paymentId;
   const paymentDetails = { payer_id: req.query.PayerID };
   paypal.payment.execute(paymentId, paymentDetails, (err) => {
     res.render('api/paypal', {
       result: true,
       success: !err
     });
-  });
+  });*/
 };
 
 /**
@@ -544,13 +545,13 @@ exports.getPayPalCancel = (req, res) => {
  * Lob API example.
  */
 exports.getLob = (req, res, next) => {
-  lob.routes.list({ zip_codes: ['10007'] }, (err, routes) => {
+  /*lob.routes.list({ zip_codes: ['10007'] }, (err, routes) => {
     if (err) { return next(err); }
     res.render('api/lob', {
       title: 'Lob API',
       routes: routes.data[0].routes
     });
-  });
+  });*/
 };
 
 /**
@@ -574,14 +575,14 @@ exports.postFileUpload = (req, res) => {
  * Pinterest API example.
  */
 exports.getPinterest = (req, res, next) => {
-  const token = req.user.tokens.find(token => token.kind === 'pinterest');
+  /*const token = req.user.tokens.find(token => token.kind === 'pinterest');
   request.get({ url: 'https://api.pinterest.com/v1/me/boards/', qs: { access_token: token.accessToken }, json: true }, (err, request, body) => {
     if (err) { return next(err); }
     res.render('api/pinterest', {
       title: 'Pinterest API',
       boards: body.data
     });
-  });
+  });*/
 };
 
 /**
@@ -589,7 +590,7 @@ exports.getPinterest = (req, res, next) => {
  * Create a pin.
  */
 exports.postPinterest = (req, res, next) => {
-  req.assert('board', 'Board is required.').notEmpty();
+  /*req.assert('board', 'Board is required.').notEmpty();
   req.assert('note', 'Note cannot be blank.').notEmpty();
   req.assert('image_url', 'Image URL cannot be blank.').notEmpty();
 
@@ -616,7 +617,7 @@ exports.postPinterest = (req, res, next) => {
     }
     req.flash('success', { msg: 'Pin created' });
     res.redirect('/api/pinterest');
-  });
+  });*/
 };
 
 exports.getGoogleMaps = (req, res) => {

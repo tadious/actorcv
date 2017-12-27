@@ -25,7 +25,7 @@ const upload = multer({ dest: path.join(__dirname, 'uploads') });
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.load({ path: '.env.dev' });
+dotenv.load({ path: '.env' });
 
 /**
  * Controllers (route handlers).
@@ -44,8 +44,6 @@ const passportConfig = require('./config/passport');
  * Create Express server.
  */
 const app = express();
-
-console.log(process.env.OPENSHIFT_NODEJS_IP);
 
 /**
  * Connect to MongoDB.

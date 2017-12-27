@@ -132,7 +132,7 @@ exports.postSignup = (req, res, next) => {
 
   if (errors) {
     req.flash('errors', errors);
-    return res.redirect('/home');
+    return res.redirect('/');
   }
 
   const user = new User({
@@ -151,7 +151,7 @@ exports.postSignup = (req, res, next) => {
     if (err) { return next(err); }
     if (existingUser) {
       req.flash('errors', { msg: 'Account with that email address already exists.' });
-      return res.redirect('/home');
+      return res.redirect('/');
     }
     
     const createRandomToken = crypto
@@ -168,20 +168,11 @@ exports.postSignup = (req, res, next) => {
     const sendActivateAccountEmail = (user) => {
       if (!user) { return; }
       const token = user.passwordResetToken;
-      const html = `You are receiving this email because you (or someone else) signed up for ActorCV.\n\n
-        Please click on the following link, or paste this into your browser to complete the process:\n\n
-        http://${req.headers.host}/set-password/${token}\n\n
-        Expires in 1 hour\n\n`;
-
-      const text = `http://${req.headers.host}/set-password/${token}`;
-
-      return Mailer.send({
-        to:user.email,
-        from:'ActorCV <no-reply@actorcv.me>',
-        subject:'Activate your ActorCV account!!',
-        html:html,
-        text:text
-      });
+      var _vars = {
+        name: user.profile.firstname,
+        confirm_link: `http://${req.headers.host}/confirm-email/${token}`
+      };
+      return Mailer.send(user.email, 'confirm', _vars);
     };
 
     createRandomToken
@@ -296,7 +287,7 @@ exports.getOauthUnlink = (req, res, next) => {
 };
 
 /**
- * GET /set-password/:token
+ * GET /reset-password/:token
  * Set Password page.
  */
 exports.getReset = (req, res, next) => {
@@ -312,14 +303,14 @@ exports.getReset = (req, res, next) => {
         req.flash('errors', { msg: 'Password reset token is invalid or has expired.' });
         return res.redirect('/forgot-password');
       }
-      res.render('landing/set-password', {
+      res.render('landing/reset-password', {
         title: 'Password Reset'
       });
     });
 };
 
 /**
- * POST /set-password/:token
+ * POST /reset-password/:token
  * Process the Set password request.
  */
 exports.postReset = (req, res, next) => {
@@ -356,38 +347,97 @@ exports.postReset = (req, res, next) => {
         return user.save().then(() => new Promise((resolve, reject) => {
           req.logIn(user, (err) => {
             if (err) { return reject(err); }
-            resolve(user, isActivating);
+            resolve(user);
           });
         }));
       });
 
-  const sendResetPasswordEmail = (user, isActivating) => {
+  const sendResetPasswordEmail = (user) => {
     if (!user) { return; }
-    
-    var subject, text, html;
-    if(isActivating) {
-      subject = 'Welcome to ActorCV!';
-      text = 'Welcome to ActorCV!!';
-      html = '<h1>Welcome to ActorCV!!</h1>';
-    } else {
-      subject = 'ActorCV password has been changed!';
-      text = 'ActorCV password has been changed!!!';
-      html = '<h1>ActorCV password has been changed!!!</h1>';
-    }
-
-    const mailOptions = {
-      to: user.email,
-      from: 'ActorCV - <no-reply@actorcv.me>',
-      subject: subject,
-      html:html,
-      text: text
-    };
-    return Mailer.send(mailOptions);
+    Mailer.send(user.email, 'password-changed', {name:user.profile.firstname});
+    return user;
   };
 
   resetPassword()
     .then(sendResetPasswordEmail)
-    .then(() => { if (!res.finished) res.redirect('/'); })
+    .then((user) => { if (!res.finished) res.redirect('/cv/'+user.slug); })
+    .catch(err => next(err));
+};
+
+/**
+ * GET /confirm-email/:token
+ * Set Password page.
+ */
+exports.getConfirmEmail = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  User
+    .findOne({ passwordResetToken: req.params.token })
+    .where('passwordResetExpires').gt(Date.now())
+    .exec((err, user) => {
+      if (err) { return next(err); }
+      if (!user) {
+        req.flash('errors', { msg: 'Confirm email token is invalid or has expired.' });
+        return res.redirect('/forgot-password');
+      }
+      res.render('landing/confirm-email', {
+        title: 'Confirm email address'
+      });
+    });
+};
+
+/**
+ * POST /confirm-email/:token
+ * Process the Confirm Email and Set password request.
+ */
+exports.postConfirmEmail = (req, res, next) => {
+  req.assert('password', 'Password must be at least 4 characters long.').len(4);
+  req.assert('confirm', 'Passwords must match.').equals(req.body.password);
+
+  const errors = req.validationErrors();
+
+  if (errors) {
+    req.flash('errors', errors);
+    return res.redirect('back');
+  }
+
+  const confirmEmail = () =>
+    User
+      .findOne({ passwordResetToken: req.params.token })
+      .where('passwordResetExpires').gt(Date.now())
+      .then((user) => {
+        if (!user) {
+          req.flash('errors', { msg: 'Password reset token is invalid or has expired.' });
+          return res.redirect('back');
+        }
+        
+        user.password = req.body.password;
+        user.passwordResetToken = undefined;
+        user.passwordResetExpires = undefined;
+        user.emailVerified = true;
+        
+        //Use userId as slug if user did not set it
+        if(!user.slug)
+          user.slug = user.id
+
+        return user.save().then(() => new Promise((resolve, reject) => {
+          req.logIn(user, (err) => {
+            if (err) { return reject(err); }
+            resolve(user);
+          });
+        }));
+      });
+
+  const sendWelcomeEmail = (user) => {
+    if (!user) { return; }
+    Mailer.send(user.email, 'welcome', {name:user.profile.firstname});
+    return user;
+  };
+
+  confirmEmail()
+    .then(sendWelcomeEmail)
+    .then((user) => { if (!res.finished) res.redirect('/cv/'+user.slug); })
     .catch(err => next(err));
 };
 
@@ -440,21 +490,11 @@ exports.postForgot = (req, res, next) => {
   const sendForgotPasswordEmail = (user) => {
     if (!user) { return; }
     const token = user.passwordResetToken;
-    const html = `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
-        Please click on the following link, or paste this into your browser to complete the process:\n\n
-        http://${req.headers.host}/set-password/${token}\n\n
-        Expires in 1 hour\n\n
-        If you did not request this, please ignore this email and your password will remain unchanged.\n`;
-
-    const text = `http://${req.headers.host}/set-password/${token}`;
-
-    Mailer.send({
-      to:user.email,
-      from:'ActorCV <no-reply@actorcv.me>',
-      subject:'Set password link',
-      html:html,
-      text:text
-    });
+    var _vars = {
+      name: user.profile.firstname,
+      reset_link: `http://${req.headers.host}/reset-password/${token}`
+    };
+    return Mailer.send(user.email, 'password-reset-link', _vars);
   };
 
   createRandomToken

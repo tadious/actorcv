@@ -20,7 +20,7 @@ uploads
 public/css/main.css
 
 # API keys and secrets
-.env
+#.env
 .env.dev
 .env.production
 .env.heroku

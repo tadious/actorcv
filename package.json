@@ -1,12 +1,15 @@
 {
-  "name": "hackathon-starter",
-  "version": "4.3.0",
-  "description": "A boilerplate for Node.js web applications",
+  "name": "actorcv",
+  "version": "0.0.1",
+  "engines":{
+    "node":"8.1.2"
+  },
+  "description": "ActorCV",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sahat/hackathon-starter.git"
+    "url": "https://github.com/tadious/actorcv.git"
   },
-  "author": "Sahat Yalkabov",
+  "author": "Tadious Bohwasi",
   "license": "MIT",
   "scripts": {
     "start": "node app.js",
@@ -24,6 +27,7 @@
     "compression": "^1.7.0",
     "connect-mongo": "^1.3.2",
     "dotenv": "^4.0.0",
+    "email-templates": "^2.6.0",
     "errorhandler": "^1.5.0",
     "express": "^4.15.4",
     "express-flash": "^0.0.2",
@@ -42,7 +46,7 @@
     "node-foursquare": "^0.3.0",
     "node-linkedin": "^0.5.6",
     "node-sass-middleware": "^0.11.0",
-    "nodemailer": "^4.0.1",
+    "nodemailer": "^2.7.2",
     "passport": "0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-github": "^1.1.0",
@@ -53,8 +57,9 @@
     "passport-oauth": "^1.0.0",
     "passport-openid": "^0.4.0",
     "passport-twitter": "^1.0.4",
+    "path": "^0.12.7",
     "paypal-rest-sdk": "^1.7.1",
-    "pug": "^2.0.0-rc.3",
+    "pug": "^2.0.0-rc.4",
     "request": "^2.81.0",
     "stripe": "^4.24.0",
     "tumblr.js": "^1.1.1",

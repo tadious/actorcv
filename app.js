@@ -62,8 +62,9 @@ mongoose.connection.on('error', (err) => {
  * Express configuration.
  */
 //app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
-app.set('host', 'http://actorcv.herokuapp.com');
-app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8082);
+app.set('host', 'https://actorcv.herokuapp.com');
+//app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8082);
+app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(expressStatusMonitor());

@@ -45,6 +45,8 @@ const passportConfig = require('./config/passport');
  */
 const app = express();
 
+console.log(process.env.OPENSHIFT_NODEJS_IP);
+
 /**
  * Connect to MongoDB.
  */
@@ -59,7 +61,8 @@ mongoose.connection.on('error', (err) => {
 /**
  * Express configuration.
  */
-app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
+//app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
+app.set('host', 'http://actorcv.herokuapp.com');
 app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8082);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -137,8 +140,10 @@ app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
 app.get('/forgot-password', userController.getForgot);
 app.post('/forgot-password', userController.postForgot);
-app.get('/set-password/:token', userController.getReset);
-app.post('/set-password/:token', userController.postReset);
+app.get('/reset-password/:token', userController.getReset);
+app.post('/reset-password/:token', userController.postReset);
+app.get('/confirm-email/:token', userController.getConfirmEmail);
+app.post('/confirm-email/:token', userController.postConfirmEmail);
 //app.get('/signup', userController.getSignup);
 app.post('/signup', userController.postSignup);
 app.get('/contact', contactController.getContact);

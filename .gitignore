@@ -23,7 +23,7 @@ public/css/main.css
 #.env
 .env.dev
 .env.production
-.env.heroku
+.env.development
 
 # Dependency directory
 node_modules

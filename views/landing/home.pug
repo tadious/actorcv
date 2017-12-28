@@ -29,17 +29,7 @@ block content
             button.btn(type='submit') Sign in!
             a(href='/forgot') Forgot password?
       .social-login
-        h3 ...or login with:
-        .social-login-buttons
-          a.btn.btn-link-1.btn-link-1-facebook(href='#')
-            i.fa.fa-facebook
-            | Facebook
-          a.btn.btn-link-1.btn-link-1-instagram(href='#')
-            i.fa.fa-instagram
-            | Instagram
-          a.btn.btn-link-1.btn-link-1-twitter(href='#')
-            i.fa.fa-twitter
-            | Tweeter
+        include partials/social-login
     .col-sm-1.middle-border
     .col-sm-1
     .col-sm-5

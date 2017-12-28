@@ -51,6 +51,7 @@ img { max-width: 100%; }
 }
 .btn-link-1:hover, .btn-link-1:focus, .btn-link-1:active { outline: 0; opacity: 0.6; color: #fff; }
 
+.btn-link-1.btn-link-1-inactive { background: #bbb; }
 .btn-link-1.btn-link-1-facebook { background: #4862a3; }
 .btn-link-1.btn-link-1-twitter { background: #55acee; }
 .btn-link-1.btn-link-1-google-plus { background: #dd4b39; }
@@ -85,6 +86,14 @@ img { max-width: 100%; }
 	line-height: 20px;
 }
 
+
+.imac {
+	background-image: url("../img/imac.png");
+	background-repeat: no-repeat;
+	min-width:549px;
+	min-height:392px;
+	margin-top: 100px;
+}
 
 /***** Top content *****/
 

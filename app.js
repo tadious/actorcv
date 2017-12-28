@@ -120,13 +120,12 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 /**
  * ActorCV landing page routes.
  */
-app.get('/home', homeController.home);
-app.get('/demo', homeController.demo);
+//app.get('/home', homeController.home);
+app.get('/why-actor-cv', homeController.whyUs);
 app.get('/pricing', homeController.pricing);
 app.get('/about', homeController.about);
 app.get('/welcome', homeController.welcome);
 
-app.get('/public-cv', passportConfig.isAuthenticated, userController.publicCv);
 app.get('/cv/:slug', userController.viewCv);
 
 
@@ -143,7 +142,8 @@ app.get('/reset-password/:token', userController.getReset);
 app.post('/reset-password/:token', userController.postReset);
 app.get('/confirm-email/:token', userController.getConfirmEmail);
 app.post('/confirm-email/:token', userController.postConfirmEmail);
-//app.get('/signup', userController.getSignup);
+/*
+app.get('/signup', userController.getSignup);
 app.post('/signup', userController.postSignup);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
@@ -152,7 +152,7 @@ app.post('/account/profile', passportConfig.isAuthenticated, userController.post
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
-
+*/
 /**
  * API examples routes.
  */

@@ -14,9 +14,9 @@ exports.home = (req, res) => {
 	});
 };
 
-exports.demo = (req, res) => {
-	res.render('landing/demo', {
-		title: 'Demo'
+exports.whyUs = (req, res) => {
+	res.render('landing/why-actor-cv', {
+		title: 'Why ActorCV'
 	});
 };
 

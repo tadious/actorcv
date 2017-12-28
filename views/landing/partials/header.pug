@@ -5,13 +5,13 @@
 				span.glyphicon.glyphicon-chevron-right(style='color:white;')
 			a.navbar-brand(href='/')
 				strong ActorCV
-		//.collapse.navbar-collapse#navMain
+		.collapse.navbar-collapse#navMain
 			ul.nav.navbar-nav.pull-right
-				li.active
+				li(class=(title === 'Home') ? 'active' : undefined)
 					a(href='/') Home
-				li
-					a(href='/demo') Demo
-				li
+				li(class=(title === 'Why ActorCV') ? 'active' : undefined)
+					a(href='/why-actor-cv') Why ActorCV
+				li(class=(title === 'Pricing') ? 'active' : undefined)
 					a(href='/pricing') Pricing
-				li
+				li(class=(title === 'About') ? 'active' : undefined)
 					a(href='/about') About

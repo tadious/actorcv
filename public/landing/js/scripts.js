@@ -19,15 +19,14 @@ jQuery(document).ready(function() {
 		*/
 		$.backstretch("/landing/img/backgrounds/1.jpg");
 
-		/*$(window).scroll(function() {
-								console.log(">>>>>>>>>>>>scrolling...")
-								if($(this).scrollTop() > 50)  //height in pixels when the navbar becomes non opaque
-								{
-												$('.opaque-navbar').addClass('opaque');
-								} else {
-												$('.opaque-navbar').removeClass('opaque');
-								}
-						});*/
+		$(window).scroll(function() {
+			//height in pixels when the navbar becomes non opaque
+			if($(this).scrollTop() > 50) {
+				$('.opaque-navbar').addClass('opaque');
+			} else {
+				$('.opaque-navbar').removeClass('opaque');
+			}
+		});
 		
 		/*
 				Login form validation
@@ -75,19 +74,11 @@ jQuery(document).ready(function() {
 
 
 		//TODO[Tadious]: Custom JS
-		/*$('#firstname').on('input', function() {
-				console.log(">>>>>>>>>>>firstname has keypressssss", $("#firstname").val(), $('meta[name="csrf-token"]').attr('content'));
-				
-		});
-		$('#lastname').on('input', function() {
-				console.log(">>>>>>>>>>>lastname has keypressssss", $("#lastname").val(), $('meta[name="csrf-token"]').attr('content'));
-		});*/
-
 		function lookupSlug(slug) {
 			$('#slug').val(slug);	
 			$.ajax({
 				type: "POST",
-				url: 'http://0.0.0.0:8082/api/user/check-slug',
+				url: '/api/user/check-slug',
 				data: {slug:slug, _csrf:$('meta[name="csrf-token"]').attr('content')},
 				success: function(res){
 					if(res.status == 'success'){

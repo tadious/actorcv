@@ -86,14 +86,21 @@ img { max-width: 100%; }
 	line-height: 20px;
 }
 
+.services {
+	margin-top: 80px;
+}
+
+.service {
+	padding-left: 20px;
+}
 
 .imac {
-	background-image: url("../img/imac.png");
-	background-repeat: no-repeat;
 	min-width:549px;
 	min-height:392px;
-	margin-top: 100px;
+	margin-top: 80px;
 }
+
+.left {text-align: left;}
 
 /***** Top content *****/
 
@@ -233,4 +240,62 @@ footer a:hover, footer a:focus { color: #fff; border-bottom: 1px dotted #fff; }
 	h1, h2 { font-size: 32px; }
 
 }
+
+.trapezoid{
+    max-width:496px;
+    height:226px;
+    position:absolute;
+    left:27px;
+    right:0;
+    top:97px;
+    bottom:0;
+    background-image:url("../img/scrolling-image.png");
+    background-size:cover;
+    background-repeat:no-repeat;
+    overflow:hidden;
+    -moz-animation:bg-scroll 10s infinite ease-in-out alternate;
+    -webkit-animation:bg-scroll 10s infinite ease-in-out alternate;
+    animation:bg-scroll 10s infinite ease-in-out alternate
+}
+@media (min-width: 768px) and (max-width: 1023px){
+    .trapezoid{
+        top:10px;
+        left:15px;
+        height:145px;
+        max-width:325px
+    }
+}
+@media (min-width: 320px) and (max-width: 767px){
+    .trapezoid{
+        max-width:262px;
+        left:14px;
+        top:9px;
+        height:120px
+    }
+}
+@-moz-keyframes bg-scroll{
+    0%{
+        background-position:top
+    }
+    100%{
+        background-position:bottom
+    }
+}
+@-webkit-keyframes bg-scroll{
+    0%{
+        background-position:top
+    }
+    100%{
+        background-position:bottom
+    }
+}
+@keyframes bg-scroll{
+    0%{
+        background-position:top
+    }
+    100%{
+        background-position:bottom
+    }
+}
+
 

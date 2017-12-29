@@ -17,7 +17,9 @@ jQuery(document).ready(function() {
 		const background_position = Math.floor(Math.random()*7)
 		$.backstretch(bgs[background_position]);
 		*/
-		$.backstretch("/landing/img/backgrounds/1.jpg");
+
+		//console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>title",title);
+		//$.backstretch("/landing/img/backgrounds/1.jpg");
 
 		$(window).scroll(function() {
 			//height in pixels when the navbar becomes non opaque

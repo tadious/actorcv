@@ -142,9 +142,10 @@ app.get('/reset-password/:token', userController.getReset);
 app.post('/reset-password/:token', userController.postReset);
 app.get('/confirm-email/:token', userController.getConfirmEmail);
 app.post('/confirm-email/:token', userController.postConfirmEmail);
-/*
+
 app.get('/signup', userController.getSignup);
 app.post('/signup', userController.postSignup);
+/*
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);

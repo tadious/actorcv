@@ -68,7 +68,7 @@ exports.postLogin = (req, res, next) => {
     }
     req.logIn(user, (err) => {
       if (err) { return next(err); }
-      req.flash('success', { msg: 'Success! You are logged in.' });
+      //req.flash('success', { msg: 'Success! You are logged in.' });
       //TODO[Tadious]: Figure out what's best
       //res.redirect(req.session.returnTo || '/public-cv');
       const slug = (req.user.slug)? req.user.slug : req.user.id;
@@ -123,12 +123,57 @@ exports.getSignup = (req, res) => {
  * POST /signup
  * Create a new local account.
  */
+exports.postSignupWithPassword = (req, res, next) => {
+  req.assert('email', 'Email is not valid').isEmail();
+  req.assert('password', 'Password must be at least 4 characters long').len(4);
+  req.assert('confirm-password', 'Passwords do not match').equals(req.body.password);
+  req.sanitize('email').normalizeEmail({ gmail_remove_dots: false });
+
+  const errors = req.validationErrors();
+
+  if (errors) {
+    req.flash('errors', errors);
+    return res.redirect('/');
+  }
+
+  const user = new User({
+    email: req.body.email,
+    emailVerified:false,
+    password: req.body.password, 
+    slug: Boolean((Number(req.body._useslug)))? req.body.slug : '',
+    profile: {
+      name: req.body.fullname
+    }
+  });
+
+  User.findOne({ email: req.body.email }, (err, existingUser) => {
+    if (err) { return next(err); }
+    if (existingUser) {
+      req.flash('errors', { msg: 'Actor with the same email address already exists.' });
+      return res.redirect('/');
+    }
+    
+    user.save((err) => {
+      if (err) { return next(err); }
+      req.logIn(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect(user.profileLink());
+      });
+    });
+  });
+};
+
+/**
+ * POST /signup
+ * Create a new local account.
+ */
 exports.postSignup = (req, res, next) => {
   req.assert('email', 'Email is not valid').isEmail();
   req.sanitize('email').normalizeEmail({ gmail_remove_dots: false });
 
   const errors = req.validationErrors();
-  //const errors = req.getValidationResult();
 
   if (errors) {
     req.flash('errors', errors);

@@ -3,11 +3,12 @@
  * Home page.
  */
 exports.index = (req, res) => {
-  res.render('landing/home', {
+  res.render('pofo/landing/layout', {
     title: 'Home'
   });
 };
 
+/*
 exports.home = (req, res) => {
 	res.render('home', {
 		title: 'Home'
@@ -37,3 +38,4 @@ exports.welcome = (req, res) => {
 		title: 'Welcome'
 	});
 };
+*/

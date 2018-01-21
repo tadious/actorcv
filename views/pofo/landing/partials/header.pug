@@ -1,0 +1,44 @@
+nav.navbar.navbar-default.bootsnav.navbar-fixed-top.header-dark.bg-transparent.nav-box-width.padding-four-lr
+  .container.nav-header-container
+    .row
+      .col-lg-2.col-md-2.col-xs-5
+        a.logo.inner-link(href='#home', title='Pofo')
+          <img src="pofo/images/logo.png" data-at2x="pofo/images/logo.png" class="logo-dark default" alt="ActorCV">
+          <img src="pofo/images/logo.png" data-at2x="pofo/images/logo.png" alt="ActorCV" class="logo-light">
+          //<img src="images/logo.png" data-at2x="images/logo@2x.png" class="logo-dark default" alt="Pofo">
+          //<img src="images/logo-full-white.png" data-at2x="images/logo-full-white@2x.png" alt="Pofo" class="logo-light">
+          //h6(style='padding-top: 10px;') ActorCV
+      .col-lg-8.col-md-8.col-xs-2.width-auto.pull-right.accordion-menu.xs-no-padding-right
+        button.navbar-toggle.collapsed.pull-right(type='button', data-toggle='collapse', data-target='#navbar-collapse-toggle-1')
+          span.sr-only toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        #navbar-collapse-toggle-1.navbar-collapse.collapse.no-padding-right
+          ul#accordion.nav.navbar-nav.navbar-center.alt-font.text-normal(data-in='fadeIn', data-out='fadeOut')
+            li
+              a.inner-link(href='#home', title='Home') Home
+            //li
+              a.inner-link(href='#successful-resumes', title='Successful Resumes') Successful Resumes
+            li
+              a.inner-link(href='#why-actor-cv', title='Why ActorCV') Successful Resumes
+            li
+              a.inner-link(href='#pricing', title='Pricing') Pricing
+            li
+              a.inner-link(href='#about', title='About') About
+            li
+              a.inner-link.login-toggle(href='#home') Login
+
+      .col-lg-2.col-md-2.col-xs-5.sm-width-auto.text-right.sm-no-padding-left
+        .header-searchbar.no-border-left
+          a.header-search-form.text-white(href='#search-header')
+            i.fa.fa-search.search-button
+          form#search-header.mfp-hide.search-form-result(method='post', action='search-result.html', name='search-header')
+            .search-form.position-relative
+              button.fa.fa-search.close-search.search-button(type='submit')
+              input.search-input(type='text', name='search', placeholder='Enter your keywords...', autocomplete='off')
+        .header-social-icon.xs-display-none
+          a(href='https://www.facebook.com/', title='Facebook', target='_blank')
+            i.fa.fa-facebook(aria-hidden='true')
+          a(href='https://twitter.com/', title='Twitter', target='_blank')
+            i.fa.fa-twitter

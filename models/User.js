@@ -84,6 +84,15 @@ userSchema.methods.website = function website() {
   return 'actorcv.me/cv/' + slug;
 };
 
+/**
+ * Helper method for getting user relative URL/Website
+ */
+userSchema.methods.profileLink = function profileLink() {
+  const user = this;
+  const slug = (user.slug)? user.slug : user.id;
+  return '/cv/' + slug;
+};
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

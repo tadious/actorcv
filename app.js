@@ -27,7 +27,7 @@ const upload = multer({ dest: path.join(__dirname, 'uploads') });
  */
 
 if (process.env.NODE_ENV == 'development')
-  dotenv.load({ path: '.env.development' });
+  dotenv.load({ path: '.env.dev' });
 
 /**
  * Controllers (route handlers).
@@ -76,12 +76,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
 app.use(session({
+  cookie: { maxAge: 600000 },
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
   secret: process.env.SESSION_SECRET,
   store: new MongoStore({
     url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
-    autoReconnect: true,
+    //autoReconnect: true,
     clear_interval: 3600
   })
 }));
@@ -117,15 +118,6 @@ app.use((req, res, next) => {
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 
-/**
- * ActorCV landing page routes.
- */
-//app.get('/home', homeController.home);
-app.get('/why-actor-cv', homeController.whyUs);
-app.get('/pricing', homeController.pricing);
-app.get('/about', homeController.about);
-app.get('/welcome', homeController.welcome);
-
 app.get('/cv/:slug', userController.viewCv);
 
 
@@ -134,17 +126,18 @@ app.get('/cv/:slug', userController.viewCv);
  */
 app.get('/', homeController.index);
 //app.get('/login', userController.getLogin);
-app.post('/login', userController.postLogin);
+//app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
-app.get('/forgot-password', userController.getForgot);
-app.post('/forgot-password', userController.postForgot);
-app.get('/reset-password/:token', userController.getReset);
-app.post('/reset-password/:token', userController.postReset);
-app.get('/confirm-email/:token', userController.getConfirmEmail);
-app.post('/confirm-email/:token', userController.postConfirmEmail);
+//app.get('/forgot-password', userController.getForgot);
+//app.post('/forgot-password', userController.postForgot);
+//app.get('/reset-password/:token', userController.getReset);
+//app.post('/reset-password/:token', userController.postReset);
+//app.get('/confirm-email/:token', userController.getConfirmEmail);
+//app.post('/confirm-email/:token', userController.postConfirmEmail);
 
-app.get('/signup', userController.getSignup);
-app.post('/signup', userController.postSignup);
+//app.get('/signup', userController.getSignup);
+//app.post('/signup', userController.postSignup);
+app.post('/signup', userController.postSignupWithPassword);
 /*
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
